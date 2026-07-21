@@ -6,7 +6,7 @@ const {ambilUser,tambahUser,ubahUser,hapusUser}=require("../controllers/user.con
 
 router.get("/",ambilUser)
 router.post("/",tambahUser)
-router.put("/:id",ubahUser)
+router.patch("/:id",ubahUser)
 router.delete("/:id",hapusUser)
 
 
