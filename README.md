@@ -1,0 +1,1 @@
+lakukan get terlebih dahulu
