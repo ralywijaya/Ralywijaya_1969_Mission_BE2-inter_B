@@ -1,31 +1,58 @@
 const movies=require("../models/movie.model")
 
+const ambilMovie = async (req, res) => {
+  try {
+    const getMovie = await movies.getMovies();
 
-const ambilMovie=async(req,res)=>{
-    const getMovie=await movies.getMovies()
-
-    if(!getMovie){
-        return res.status(400).json({massage:"ambil movie gagal"})
+    if(getMovie.length==0){
+           return res.status(400).json({massage:"ambil movie gagal"})
     }
-    return res.status(200).json({data:getMovie})
-}
+
+    return res.status(200).json({
+      message: "Berhasil mengambil data movie",
+      data: getMovie,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Gagal mengambil database movie",
+      error: error.message,
+    });
+  }
+};
+       
+    
+  
+
 
 const ambilMovieID=async(req,res)=>{
-    const id=req.params.id
+    try{
+         const id=req.params.id
 
     const getMovieID=await movies.getMoviesID(id)
 
-    if(id==0||!id){
+       if(id==0||!id){
          return res.status(400).json({massage:"ambil movie berdasarkan id gagal"})
     }
+
      return res.status(200).json(getMovieID)
 }
+    
+    catch (error) {
+    return res.status(500).json({
+      message: "Gagal mengambil database movie berdasarkan id",
+      error: error.message,
+    });
+  }
 
+ 
+    
+}
 
 
 const tambahMovie=async(req,res)=>{
 
-    const body=req.body
+    try{
+ const body=req.body
 
     const postMovie=await movies.postMovies(body)
 
@@ -34,30 +61,56 @@ const tambahMovie=async(req,res)=>{
 }
   return res.status(200).json({massage:"post user berhasil",data:body})
 
+
+    }
+
+      catch (error) {
+    return res.status(500).json({
+      message: "Gagal post database film",
+      error: error.message,
+    });
+  }
+
+   
+
 }
 
 
 const ubahMovie=async (req,res)=>{
-    const id=req.params.id
+
+    try{
+const id=req.params.id
 
     const body=req.body
 
 
-    const updateUser=await movies.updateMovies(id,{
+    const updateMovie=await movies.updateMovies(id,{
          nama_movie:body.nama_movie,
         kategori_umur:body.kategori_umur,
         deskripsi_movie:body.deskripsi_movie
     })
 
     if(id==0){
-         return res.status(400).json({massage:"update movie gagal"})
+         return res.status(400).json({massage:"update database movie gagal"})
     }
 
 return res.status(200).json({massage:"update movie berhasil,",data:body})
+        
+    }
+      catch (error) {
+    return res.status(500).json({
+      message: "Gagal Update data movie",
+      error: error.message,
+    });
+  }
+    
 }
 
 const hapusMovie=async (req,res)=>{
-      const id=req.params.id
+
+    try{
+
+          const id=req.params.id
       console.log(id)
 
       const deleteMovie= await movies.deleteMovies(id)
@@ -67,6 +120,13 @@ const hapusMovie=async (req,res)=>{
 
 return res.status(200).json({massage:"hapus movie berhasil"})
 
+    }
+      catch (error) {
+    return res.status(500).json({
+      message: "Gagal hapus data movie berdasarkan id",
+      error: error.message,
+    });
+  }
       
 }
 

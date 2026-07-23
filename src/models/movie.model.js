@@ -1,6 +1,7 @@
 const db=require("../config/database.config")
 
 const getMovies=async()=>{
+    
     return db("movie")
 }
 const getMoviesID=async(id)=>{
